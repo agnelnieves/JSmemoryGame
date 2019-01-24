@@ -8,13 +8,26 @@
 
 const deck = document.querySelector('.deck');
 
+function deckShuffle() {
+    const cardListToShuffle = Array.from(document.querySelectorAll('.deck li'));
+    const shuffledCards = shuffle(cardListToShuffle);
+
+    // Appending shuffled cards to deck
+    for ( card of shuffledCards ) {
+        deck.appendChild(card);
+    }
+}
+
+deckShuffle();
+
 deck.addEventListener('click', event => {
 
     const clickTarget = event.target;
 
-    // Toggle card and limit toggle to two cards at a time
+    // If match, execute
     if ( clickValidation(clickTarget) ) {
 
+        // Toggle card and limit toggle to two cards at a time
         toggleCard(clickTarget);
         addToggledCard(clickTarget);
 
@@ -25,6 +38,7 @@ deck.addEventListener('click', event => {
 
 });
 
+// Validates matches
 function clickValidation(clickTarget) {
     return(
         clickTarget.classList.contains('card') &&
