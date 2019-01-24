@@ -2,6 +2,8 @@
  * Create a list that holds all of your cards
  */
 
+ let toggledCards = [];
+
 // Select all cards and store them in a variable 'cards'
 
 const deck = document.querySelector('.deck');
@@ -10,13 +12,44 @@ deck.addEventListener('click', event => {
 
     const clickTarget = event.target;
 
-    if ( clickTarget.classList.contains('card')) {
-        console.log("I'm a card!");
-        clickTarget.classList.toggle('open');
-        clickTarget.classList.toggle('show');
+    // Toggle card and limit toggle to two cards at a time
+    if (
+        clickTarget.classList.contains('card')
+         && toggledCards.length < 2 ) {
+
+        toggleCard(clickTarget);
+        addToggledCard(clickTarget);
+
+        if ( toggledCards.length == 2 ) {
+            checkIfMatched();
+        }
     }
 
 });
+
+// Toggle function
+function toggleCard(clickTarget) {
+    clickTarget.classList.toggle('open');
+    clickTarget.classList.toggle('show');
+}
+
+// Once toggled, card is added to array toggledCard[]
+function addToggledCard(clickTarget) {
+    toggledCards.push(clickTarget);
+    console.log(toggledCards);
+}
+
+// Matching card validation
+function checkIfMatched() {
+    if (
+        toggledCards[0].firstElementChild.className ===
+        toggledCards[1].firstElementChild.className
+    ) {
+        console.log('Matched');
+    } else {
+        console.log('Not matched');
+    }
+}
 
 /*
  * Display the cards on the page
