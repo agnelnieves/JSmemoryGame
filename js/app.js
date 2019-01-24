@@ -13,9 +13,7 @@ deck.addEventListener('click', event => {
     const clickTarget = event.target;
 
     // Toggle card and limit toggle to two cards at a time
-    if (
-        clickTarget.classList.contains('card')
-         && toggledCards.length < 2 ) {
+    if ( clickValidation(clickTarget) ) {
 
         toggleCard(clickTarget);
         addToggledCard(clickTarget);
@@ -27,10 +25,19 @@ deck.addEventListener('click', event => {
 
 });
 
+function clickValidation(clickTarget) {
+    return(
+        clickTarget.classList.contains('card') &&
+        !clickTarget.classList.contains('match') &&
+        toggledCards.length < 2 &&
+        !toggledCards.includes(clickTarget)
+    );
+}
+
 // Toggle function
-function toggleCard(clickTarget) {
-    clickTarget.classList.toggle('open');
-    clickTarget.classList.toggle('show');
+function toggleCard(card) {
+    card.classList.toggle('open');
+    card.classList.toggle('show');
 }
 
 // Once toggled, card is added to array toggledCard[]
@@ -46,8 +53,19 @@ function checkIfMatched() {
         toggledCards[1].firstElementChild.className
     ) {
         console.log('Matched');
+        // Adding match class
+        toggledCards[0].classList.toggle('match');
+        toggledCards[1].classList.toggle('match');
+        toggledCards = [];
+        // Resetting the array
+
     } else {
-        console.log('Not matched');
+
+        setTimeout(() => {
+            toggleCard(toggledCards[0]);
+            toggleCard(toggledCards[1]);
+            toggledCards = [];
+        }, 1000);
     }
 }
 
