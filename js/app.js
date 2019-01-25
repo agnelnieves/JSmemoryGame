@@ -33,6 +33,7 @@ deck.addEventListener('click', event => {
 
         if ( toggledCards.length == 2 ) {
             checkIfMatched();
+            addMove();
         }
     }
 
@@ -103,6 +104,17 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+
+// Moves counter function
+
+let moves = 0;
+
+function addMove() {
+	moves++;
+	const movesText = document.querySelector('.moves');
+	movesText.innerHTML = moves;
 }
 
 
