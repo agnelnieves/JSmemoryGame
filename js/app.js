@@ -208,3 +208,16 @@ function writeModalStats() {
     timeStat.innerHTML = `Time: ${time}`;
     moveStat.innerHTML = `Time: ${moves}`;
 }
+
+document.querySelector('.modal__cancel').addEventListener('click', () => {
+    toggleModal();
+});
+
+document.querySelector('.modal__close-btn').addEventListener('click', () => {
+    toggleModal();
+});
+
+document.querySelector('.modal__replay').addEventListener('click', () => {
+    reset();
+    toggleModal();
+});
