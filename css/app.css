@@ -33,6 +33,8 @@ h1 {
     font-weight: 300;
 }
 
+.hide { display: none !important; }
+
 /*
  * Styles for the deck of cards
  */
