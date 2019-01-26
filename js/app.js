@@ -34,6 +34,7 @@ deck.addEventListener('click', event => {
         if ( toggledCards.length == 2 ) {
             checkIfMatched();
             addMove();
+            analyzeScore();
         }
     }
 
@@ -58,7 +59,6 @@ function toggleCard(card) {
 // Once toggled, card is added to array toggledCard[]
 function addToggledCard(clickTarget) {
     toggledCards.push(clickTarget);
-    console.log(toggledCards);
 }
 
 // Matching card validation
@@ -67,7 +67,6 @@ function checkIfMatched() {
         toggledCards[0].firstElementChild.className ===
         toggledCards[1].firstElementChild.className
     ) {
-        console.log('Matched');
         // Adding match class
         toggledCards[0].classList.toggle('match');
         toggledCards[1].classList.toggle('match');
@@ -92,6 +91,7 @@ function checkIfMatched() {
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -115,6 +115,24 @@ function addMove() {
 	moves++;
 	const movesText = document.querySelector('.moves');
 	movesText.innerHTML = moves;
+}
+
+// Analyze score and determine star status
+function analyzeScore() {
+    if ( moves == 16 || moves == 24 ) {
+        hideStar();
+    }
+}
+
+// Hides star
+function hideStar() {
+    const starList = document.querySelectorAll('.stars li');
+    for (star of starList) {
+        if ( star.style.display !== 'none') {
+            star.style.display = 'none';
+            break;
+        }
+    }
 }
 
 
