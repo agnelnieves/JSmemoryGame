@@ -1,3 +1,7 @@
+let timerOff = true;
+let time = 0;
+
+
 /*
  * Create a list that holds all of your cards
  */
@@ -35,6 +39,12 @@ deck.addEventListener('click', event => {
             checkIfMatched();
             addMove();
             analyzeScore();
+        }
+
+        // Timer
+        if ( timerOff ) {
+            displayTimer();
+            timerOff = false;
         }
     }
 
@@ -82,6 +92,34 @@ function checkIfMatched() {
         }, 1000);
     }
 }
+
+// Game Timer
+
+function startTimer() {
+    let timerID = setInterval(() => {
+        console.log(time);
+    }, 1000);
+}
+
+function displayTimer() {
+    const timer = document.querySelector('.timer');
+    console.log(timer);
+    let timerID = setInterval(() => {
+        time++;
+        const minutes = Math.floor( time / 60 );
+const seconds = time % 60;
+
+if (seconds < 10 ) {
+
+    timer.innerHTML = `${minutes}:0${seconds}`;
+
+} else {
+    timer.innerHTML = `${minutes}:${seconds}`;
+}
+    }, 1000);
+}
+
+
 
 /*
  * Display the cards on the page
