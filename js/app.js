@@ -190,3 +190,21 @@ function resetStars() {
         star.style.display = 'inline';
     }
 }
+
+// Modal
+
+function toggleModal() {
+    const modal = document.querySelector('.modal__overlay');
+    modal.classList.toggle('hide');
+}
+
+// toggleModal();
+
+function writeModalStats() {
+    const timeStat = document.querySelector('.modal__time');
+    const timer = document.querySelector('.timer').innerHTML;
+    const moveStat = document.querySelector('.modal__moves').innerHTML;
+
+    timeStat.innerHTML = `Time: ${time}`;
+    moveStat.innerHTML = `Time: ${moves}`;
+}
