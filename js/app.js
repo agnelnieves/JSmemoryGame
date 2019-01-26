@@ -7,6 +7,8 @@ const timer = document.querySelector('.timer');
 let timerOff = true;
 let time = 0;
 let timerID;
+let matched = 0;
+const TOTAL_PAIRS = 8;
 
 function deckShuffle() {
     const cardListToShuffle = Array.from(document.querySelectorAll('.deck li'));
@@ -78,6 +80,11 @@ function checkIfMatched() {
         toggledCards[1].classList.toggle('match');
         toggledCards = [];
         // Resetting the array
+        matched++;
+
+        if ( matched === TOTAL_PAIRS ) {
+            gameOver();
+        }
 
     } else {
 
@@ -169,6 +176,7 @@ function reset() {
     resetMoves();
     resetStars();
     deckShuffle();
+    resetCards();
 }
 
 function resetTimer() {
@@ -191,7 +199,23 @@ function resetStars() {
     }
 }
 
+function resetCards() {
+    const cards = document.querySelectorAll('.deck li');
+    for (let card of cards) {
+        card.className = 'card';
+    }
+}
+
 // Modal
+
+// Modal test
+time = 121;
+// displayTime();
+moves = 16;
+// checkScore();
+
+// writeModalStats();
+// toggleModal();
 
 function toggleModal() {
     const modal = document.querySelector('.modal__overlay');
@@ -204,10 +228,27 @@ function writeModalStats() {
     const timeStat = document.querySelector('.modal__time');
     const timer = document.querySelector('.timer').innerHTML;
     const moveStat = document.querySelector('.modal__moves').innerHTML;
+    const starsStat = document.querySelector('.modal__stars').innerHTML;
 
     timeStat.innerHTML = `Time: ${time}`;
     moveStat.innerHTML = `Time: ${moves}`;
+    // starsStat.innerHTML = `${stars}`;
 }
+
+function getStars() {
+    stars = document.querySelectorAll('.stars li');
+    starCount = 0;
+    for (star of stars) {
+        if (star.style.display !== 'none' ) {
+            starCount++;
+        }
+    }
+
+    console.log(starCount);
+    return starCount;
+}
+
+
 
 document.querySelector('.modal__cancel').addEventListener('click', () => {
     toggleModal();
@@ -217,7 +258,17 @@ document.querySelector('.modal__close-btn').addEventListener('click', () => {
     toggleModal();
 });
 
-document.querySelector('.modal__replay').addEventListener('click', () => {
+document.querySelector('.modal__replay').addEventListener('click', replayGame);
+
+// Game over
+function gameOver() {
+    stopTimer();
+    writeModalStats();
+    toggleModal();
+}
+
+// Replay game
+function replayGame() {
     reset();
     toggleModal();
-});
+}

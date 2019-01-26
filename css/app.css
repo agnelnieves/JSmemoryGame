@@ -111,3 +111,99 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/* CSS */
+
+.modal__overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__container {
+    box-sizing: border-box;
+    width: 40%;
+    height: 40%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+}
+
+.modal__header {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.modal__title {
+    margin: 5px 0;
+}
+
+.modal__close-btn {
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 1px 7px;
+    cursor: pointer;
+}
+
+.modal__body {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__stars {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+}
+
+.modal__stars li {
+    padding: 0 5px;
+    color: #f7e22a;
+    /* color: #02ccba; */
+}
+
+.modal__footer {
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.modal__button {
+    width: 100%;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    border: none;
+    padding: 15px 10px;
+    background-color: #02ccba;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal__replay{
+    margin-left: 5px;
+}
+.modal__cancel{
+    margin-right: 5px;
+}
