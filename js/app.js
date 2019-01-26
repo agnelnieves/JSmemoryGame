@@ -1,16 +1,13 @@
-let timerOff = true;
-let time = 0;
-
-
-/*
- * Create a list that holds all of your cards
- */
-
- let toggledCards = [];
-
-// Select all cards and store them in a variable 'cards'
+//  Globals
 
 const deck = document.querySelector('.deck');
+let toggledCards = [];
+let moves = 0;
+
+const timer = document.querySelector('.timer');
+let timerOff = true;
+let time = 0;
+let timerID;
 
 function deckShuffle() {
     const cardListToShuffle = Array.from(document.querySelectorAll('.deck li'));
@@ -43,7 +40,7 @@ deck.addEventListener('click', event => {
 
         // Timer
         if ( timerOff ) {
-            displayTimer();
+            startTimer();
             timerOff = false;
         }
     }
@@ -97,36 +94,29 @@ function checkIfMatched() {
 
 function startTimer() {
     let timerID = setInterval(() => {
-        console.log(time);
+        time++;
+        displayTimer();
     }, 1000);
 }
 
 function displayTimer() {
-    const timer = document.querySelector('.timer');
-    console.log(timer);
-    let timerID = setInterval(() => {
-        time++;
-        const minutes = Math.floor( time / 60 );
-const seconds = time % 60;
+    const minutes = Math.floor( time / 60 );
+    const seconds = time % 60;
 
-if (seconds < 10 ) {
+    if (seconds < 10 ) {
 
-    timer.innerHTML = `${minutes}:0${seconds}`;
+        timer.innerHTML = `${minutes}:0${seconds}`;
 
-} else {
-    timer.innerHTML = `${minutes}:${seconds}`;
-}
-    }, 1000);
+    } else {
+        timer.innerHTML = `${minutes}:${seconds}`;
+    }
 }
 
+function stopTimer() {
+    clearInterval(timerID);
+}
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -146,8 +136,6 @@ function shuffle(array) {
 
 
 // Moves counter function
-
-let moves = 0;
 
 function addMove() {
 	moves++;
