@@ -3,7 +3,6 @@
 const deck = document.querySelector('.deck');
 let toggledCards = [];
 let moves = 0;
-
 const timer = document.querySelector('.timer');
 let timerOff = true;
 let time = 0;
@@ -93,7 +92,7 @@ function checkIfMatched() {
 // Game Timer
 
 function startTimer() {
-    let timerID = setInterval(() => {
+         timerID = setInterval(() => {
         time++;
         displayTimer();
     }, 1000);
@@ -161,14 +160,33 @@ function hideStar() {
     }
 }
 
+// Reset
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+document.querySelector('.restart').addEventListener('click', reset);
+
+function reset() {
+    resetTimer();
+    resetMoves();
+    resetStars();
+    deckShuffle();
+}
+
+function resetTimer() {
+    stopTimer();
+    timerOff = true;
+    time =0;
+    displayTimer();
+}
+
+function resetMoves() {
+    moves = 0;
+    document.querySelector('.moves').innerHTML = moves;
+}
+
+function resetStars() {
+    stars = 0;
+    const starList = document.querySelectorAll('.stars li');
+    for (star of starList) {
+        star.style.display = 'inline';
+    }
+}
