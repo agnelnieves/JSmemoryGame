@@ -153,6 +153,7 @@ function addMove() {
 function analyzeScore() {
     if ( moves == 16 || moves == 24 ) {
         hideStar();
+        hideModalStars();
     }
 }
 
@@ -209,12 +210,12 @@ function resetCards() {
 // Modal
 
 // Modal test
-time = 121;
+
 // displayTime();
-moves = 16;
+// moves = 16;
 // checkScore();
 
-// writeModalStats();
+writeModalStats();
 // toggleModal();
 
 function toggleModal() {
@@ -222,33 +223,50 @@ function toggleModal() {
     modal.classList.toggle('hide');
 }
 
-// toggleModal();
 
 function writeModalStats() {
     const timeStat = document.querySelector('.modal__time');
     const timer = document.querySelector('.timer').innerHTML;
-    const moveStat = document.querySelector('.modal__moves').innerHTML;
+    const moveStat = document.querySelector('.modal__moves');
     const starsStat = document.querySelector('.modal__stars').innerHTML;
 
-    timeStat.innerHTML = `Time: ${time}`;
-    moveStat.innerHTML = `Time: ${moves}`;
+    const minutes = Math.floor( time / 60 );
+    const seconds = time % 60;
+
+    if (seconds < 10 ) {
+
+        timeStat.innerHTML = `${minutes}:0${seconds}`;
+
+    } else {
+        timeStat.innerHTML = `${minutes}:${seconds}`;
+    }
+
+    moveStat.innerHTML = `Moves: ${moves}`;
     // starsStat.innerHTML = `${stars}`;
 }
 
-function getStars() {
-    stars = document.querySelectorAll('.stars li');
-    starCount = 0;
-    for (star of stars) {
-        if (star.style.display !== 'none' ) {
-            starCount++;
+// function getStars() {
+//     stars = document.querySelectorAll('.stars li');
+//     starCount = 0;
+//     for (star of stars) {
+//         if (star.style.display !== 'none' ) {
+//             starCount++;
+//         }
+//     }
+
+//     console.log(starCount);
+//     return starCount;
+// }
+
+function hideModalStars() {
+    const starList = document.querySelectorAll('.modal__stars li');
+    for (star of starList) {
+        if ( star.style.display !== 'none') {
+            star.style.display = 'none';
+            break;
         }
     }
-
-    console.log(starCount);
-    return starCount;
 }
-
-
 
 document.querySelector('.modal__cancel').addEventListener('click', () => {
     toggleModal();
@@ -263,12 +281,12 @@ document.querySelector('.modal__replay').addEventListener('click', replayGame);
 // Game over
 function gameOver() {
     stopTimer();
-    writeModalStats();
+    writeModalStats(); // TODO: finish function
     toggleModal();
 }
 
 // Replay game
 function replayGame() {
-    reset();
     toggleModal();
+    reset();
 }
