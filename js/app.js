@@ -1,18 +1,22 @@
-//  Globals
+// Shuffle function from http://stackoverflow.com/a/2450976
 
-const deck = document.querySelector('.deck');
-let toggledCards = [];
-let moves = 0;
-const timer = document.querySelector('.timer');
-let timerOff = true;
-let time = 0;
+//  Global variables
+
 let timerID;
-let matched = 0;
-const TOTAL_PAIRS = 8;
+let time            = 0;
+let moves           = 0;
+let matched         = 0;
+let timerOff        = true;
+let toggledCards    = [];
+const TOTAL_PAIRS   = 8; // Total pairs: For validation
+const deck          = document.querySelector('.deck');
+const timer         = document.querySelector('.timer');
 
+
+// Shuffles deck
 function deckShuffle() {
     const cardListToShuffle = Array.from(document.querySelectorAll('.deck li'));
-    const shuffledCards = shuffle(cardListToShuffle);
+    const shuffledCards     = shuffle(cardListToShuffle);
 
     // Appending shuffled cards to deck
     for ( card of shuffledCards ) {
@@ -33,6 +37,7 @@ deck.addEventListener('click', event => {
         toggleCard(clickTarget);
         addToggledCard(clickTarget);
 
+        // Validates max amount of cards allowed by pairs
         if ( toggledCards.length == 2 ) {
             checkIfMatched();
             addMove();
@@ -45,16 +50,15 @@ deck.addEventListener('click', event => {
             timerOff = false;
         }
     }
-
 });
 
 // Validates matches
 function clickValidation(clickTarget) {
     return(
-        clickTarget.classList.contains('card') &&
-        !clickTarget.classList.contains('match') &&
         toggledCards.length < 2 &&
-        !toggledCards.includes(clickTarget)
+        !toggledCards.includes(clickTarget) &&
+        clickTarget.classList.contains('card') &&
+        !clickTarget.classList.contains('match')
     );
 }
 
@@ -71,6 +75,7 @@ function addToggledCard(clickTarget) {
 
 // Matching card validation
 function checkIfMatched() {
+    // If first card in the array matches the second
     if (
         toggledCards[0].firstElementChild.className ===
         toggledCards[1].firstElementChild.className
@@ -82,12 +87,13 @@ function checkIfMatched() {
         // Resetting the array
         matched++;
 
+        // If matches the total amount of pairs (End game)
         if ( matched === TOTAL_PAIRS ) {
             gameOver();
         }
 
     } else {
-
+        // Flips clicked cards after 1s
         setTimeout(() => {
             toggleCard(toggledCards[0]);
             toggleCard(toggledCards[1]);
@@ -99,16 +105,18 @@ function checkIfMatched() {
 // Game Timer
 
 function startTimer() {
-         timerID = setInterval(() => {
+        timerID = setInterval(() => {
         time++;
         displayTimer();
     }, 1000);
 }
 
+// Displays timer on element
 function displayTimer() {
     const minutes = Math.floor( time / 60 );
     const seconds = time % 60;
 
+    // Time formatting
     if (seconds < 10 ) {
 
         timer.innerHTML = `${minutes}:0${seconds}`;
@@ -118,14 +126,12 @@ function displayTimer() {
     }
 }
 
+// Stops time
 function stopTimer() {
     clearInterval(timerID);
 }
 
-
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-
+// shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -141,7 +147,7 @@ function shuffle(array) {
 }
 
 
-// Moves counter function
+// Moves counter
 
 function addMove() {
 	moves++;
@@ -168,7 +174,7 @@ function hideStar() {
     }
 }
 
-// Reset
+// Reset game
 
 document.querySelector('.restart').addEventListener('click', reset);
 
@@ -181,10 +187,10 @@ function reset() {
 }
 
 function resetTimer() {
-    stopTimer();
-    timerOff = true;
     time =0;
+    stopTimer();
     displayTimer();
+    timerOff = true;
 }
 
 function resetMoves() {
@@ -209,20 +215,12 @@ function resetCards() {
 
 // Modal
 
-// Modal test
-
-// displayTime();
-// moves = 16;
-// checkScore();
-
 writeModalStats();
-// toggleModal();
 
 function toggleModal() {
     const modal = document.querySelector('.modal__overlay');
     modal.classList.toggle('hide');
 }
-
 
 function writeModalStats() {
     const timeStat = document.querySelector('.modal__time');
@@ -235,28 +233,14 @@ function writeModalStats() {
 
     if (seconds < 10 ) {
 
-        timeStat.innerHTML = `${minutes}:0${seconds}`;
+        timeStat.innerHTML = `Time: ${minutes}:0${seconds}`;
 
     } else {
-        timeStat.innerHTML = `${minutes}:${seconds}`;
+        timeStat.innerHTML = `Time: ${minutes}:${seconds}`;
     }
 
     moveStat.innerHTML = `Moves: ${moves}`;
-    // starsStat.innerHTML = `${stars}`;
 }
-
-// function getStars() {
-//     stars = document.querySelectorAll('.stars li');
-//     starCount = 0;
-//     for (star of stars) {
-//         if (star.style.display !== 'none' ) {
-//             starCount++;
-//         }
-//     }
-
-//     console.log(starCount);
-//     return starCount;
-// }
 
 function hideModalStars() {
     const starList = document.querySelectorAll('.modal__stars li');
@@ -281,7 +265,7 @@ document.querySelector('.modal__replay').addEventListener('click', replayGame);
 // Game over
 function gameOver() {
     stopTimer();
-    writeModalStats(); // TODO: finish function
+    writeModalStats();
     toggleModal();
 }
 
